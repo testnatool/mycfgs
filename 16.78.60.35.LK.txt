@@ -1,0 +1,1624 @@
+
+!
+version 12.4
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+service udp-small-servers
+!
+hostname s20-cisco-2811-2
+!
+boot-start-marker
+boot system flash flash:c2800nm-advipservicesk9-mz.124-15.T1.bin
+boot-end-marker
+!
+logging userinfo
+logging buffered 4096 debugging
+enable secret level 14 5 $1$eZ9p$dEUSBRo.vOEI4GzmBt.Xw1
+enable secret 5 $1$3ZeA$g4YXxLU4ABRGIBSFK1vBY1
+!
+aaa new-model
+!
+!
+aaa authentication login default local enable
+aaa authorization exec default group tacacs+ none 
+aaa accounting update newinfo
+aaa accounting exec default start-stop group tacacs+
+aaa accounting system default start-stop group tacacs+
+!
+aaa session-id unique
+!
+resource policy
+!
+no ip source-route
+ip tcp window-size 32768
+ip tcp synwait-time 5
+ip tcp path-mtu-discovery
+ip telnet source-interface Loopback0
+!
+!
+ip cef table event-log
+ip cef
+ip cef accounting non-recursive prefix-length 
+ip cef traffic-statistics update-rate 60
+!
+!
+ip vrf newtest
+ description DTA_75526
+ rd 400:2
+ context SNMPtest
+ bgp next-hop Loopback87
+!
+ip vrf test2
+ rd 700:1
+ bgp next-hop Loopback88
+!
+ip vrf test222
+ description fr0gs froGz
+ rd 67:2
+ bgp next-hop Loopback888
+!
+ip ftp source-interface Loopback0
+ip ftp username Manager
+ip ftp password 7 15000509103A2A717D
+ip tftp source-interface Loopback0
+no ip bootp server
+no ip domain lookup
+ip domain name fc.usa.hp.com
+ip name-server 16.110.135.51
+ip ssh time-out 20
+ip ssh source-interface Loopback0
+ip ssh version 2
+ip scp server enable
+ip source-track address-limit 1
+ip source-track syslog-interval 5
+!
+ipv6 unicast-routing
+clns routing
+mpls ldp graceful-restart
+mpls traffic-eng tunnels
+mpls traffic-eng logging lsp path-errors
+mpls traffic-eng logging lsp reservation-errors
+mpls traffic-eng signalling advertise implicit-null
+mpls discovery vpn next-hop
+!
+!
+voice-card 0
+ no dspfarm
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1573526360
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1573526360
+ revocation-check none
+ rsakeypair TP-self-signed-1573526360
+!
+!
+crypto pki certificate chain TP-self-signed-1573526360
+ certificate self-signed 01
+  30820256 308201BF A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 31353733 35323633 3630301E 170D3131 31303134 31373030 
+  33395A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D31 35373335 
+  32363336 3030819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100C46B 5BBF8FED D0FA2598 E0271B60 8695A19D 24E9C8DD 401EB543 FBB58BB5 
+  73DFB69B 84F11B32 53ED7E0B E4131BDF B376EA76 4597CE49 05075CBF CB02EB17 
+  20F2D217 C649519E C82A1EF1 9501B4B6 06EFC7B0 E036C815 ED5B5C19 9E72D8BE 
+  90811B7C 0C91DA22 9ED1159D 81A101DA ADD5DEA4 B21EE3DA 9215FA13 5F6815A3 
+  F5EF0203 010001A3 7E307C30 0F060355 1D130101 FF040530 030101FF 30290603 
+  551D1104 22302082 1E733230 2D636973 636F2D32 3831312D 322E6663 2E757361 
+  2E68702E 636F6D30 1F060355 1D230418 30168014 C8E2CB0B 2F358207 1B90018A 
+  41DCB01A 2751B788 301D0603 551D0E04 160414C8 E2CB0B2F 3582071B 90018A41 
+  DCB01A27 51B78830 0D06092A 864886F7 0D010104 05000381 81009904 1F3FD9DF 
+  165016B4 9E25D6AB 88E0E0B1 FE47D030 33F9E198 23EBF5D7 BBB17068 7F30FA06 
+  41B01A27 BBBEBBCF A2301B46 21D1B4BD 6DEA7492 3DEAFE51 7E6DF1F6 DE0A4417 
+  887F6D93 87A227A6 6A2E4B98 14FE60F2 938CD93C 5F6F651D 616E3E28 6B60A01B 
+  6719260A 21490AD3 62AAB9AA A05A4796 D941BA38 7B9BBC5A 02C0
+  quit
+username cisco privilege 15 secret 5 $1$X2UZ$PtMDFha3aChO1oXUunIAe.
+username qatest1 privilege 15
+username qatest2 privilege 15
+username Opsware1234 privilege 15 secret 5 $1$OXA.$qx95l7AmKEkb3IzX3I40c0
+username testuser privilege 15 secret 5 $1$ifvR$nMphctDTjtxQZ7KjwMTnp0
+username manager privilege 15 secret 5 $1$eqg2$hB1znqsne5IGK9YWRIoRX0
+username dpeters password 7 0202145E1F031D32
+username labadmin privilege 15 secret 5 $1$hQF8$/1tILrNOimbUtVV/cMDUU1
+username vanbrunt privilege 15 secret 5 $1$bLyJ$tX/s/2ulh0Yc1VB7skaM9.
+username vikram password 7 00161D03104B0A535A
+username Admin password 7 011202095205
+username subadmin privilege 5 password 7 03174E09070B2C4540
+archive
+ log config
+  hidekeys
+!
+!
+class-map match-all NO-CATS-ALLOWED!
+ description class map for SecurityPolicy 
+ match protocol nntp
+ match cos  5 
+!
+!
+policy-map SecurityPolicy
+!
+! 
+!
+!
+!
+!
+!
+interface Tunnel103
+ description IPv6-in-IPv4 tunnel to sultan
+ no ip address
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.136.110
+!
+interface Tunnel104
+ description IPv6-in-IPv4 tunnel to 10.255.6.2
+ no ip address
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.6.2
+!
+interface Tunnel105
+ description IPv6-in-IPv4 tunnel to red-qanaslin1
+ no ip address
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.136.65
+!
+interface Tunnel106
+ description IPv6-in-IPv4 tunnel to red-qanassol1
+ no ip address
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.132.171
+!
+interface Tunnel107
+ description IPv6-in-IPv4 tunnel to SanJose IPv6 Lab
+ no ip address
+ tunnel source 10.255.38.15
+ tunnel destination 192.168.169.50
+!
+interface Tunnel108
+ description IPv6-in-IPv4 tunnel to red-qanaslin2
+ no ip address
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.136.71
+!
+interface Tunnel109
+ description IPv6-in-IPv4 tunnel to 10.255.132.187
+ no ip address
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.140.54
+!
+interface Tunnel110
+ description IPv6-in-IPv4 tunnel to BrianVM
+ no ip address
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.136.138
+!
+interface Tunnel111
+ description IPv6-in-IPv4 tunnel to bel-bldnas2
+ no ip address
+ ipv6 address FC00:AFF:38:10::29/126
+ ipv6 rip test enable
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.138.112
+ tunnel mode ipv6ip
+!
+interface Tunnel112
+ description IPv6-in-IPv4 tunnel to red-bldnas02
+ no ip address
+ ipv6 address FC00:AFF:38:10::2D/126
+ ipv6 rip test enable
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.138.102
+ tunnel mode ipv6ip
+!
+interface Tunnel113
+ description IPv6-in-IPv4 tunnel to bel-bldnas1
+ no ip address
+ ipv6 address FC00:AFF:38:10::31/126
+ ipv6 rip test enable
+ tunnel source 10.255.38.15
+ tunnel destination 10.255.138.111
+ tunnel mode ipv6ip
+!
+interface Loopback0
+ description test 2/20/09bm8
+ no ip address
+ no ip redirects
+ no ip proxy-arp
+ ip pim sparse-dense-mode
+ no ip route-cache cef
+ no ip route-cache
+ no ip mroute-cache
+!
+interface Loopback1
+ no ip address
+ ipv6 address 10::1/128
+!
+interface Loopback7
+ no ip address
+ ip access-group 60 out
+!
+interface Loopback87
+ ip vrf forwarding newtest
+ no ip address
+!
+interface Loopback88
+ ip vrf forwarding test2
+ no ip address
+!
+interface Loopback99
+ no ip address
+ ip policy route-map test2
+!
+interface Loopback888
+ ip vrf forwarding test222
+ no ip address
+!
+interface Loopback10012
+ ip address 10.101.102.10 255.255.255.252
+ ip access-group 101 in
+ no ip redirects
+!
+interface Loopback10025
+ no ip address
+!
+interface FastEthernet0/0
+ description Hello CPE
+ ip address 16.78.60.35 255.255.240.0
+ ip access-group 103 in
+ duplex full
+ speed 100
+ ipv6 address FC00:AFF:38:1::15/64
+ ipv6 rip test enable
+!
+interface FastEthernet0/1
+ description KEWL
+ mac-address 0000.0000.0001
+ no ip address
+ ip access-group 20 in
+ ip access-group 20 out
+ ip policy route-map policyMap
+ duplex auto
+ speed 10
+!
+router isis eric_grey
+ net 50.0001.0001.0002.0000.0000.0000.1025.5005.0000.00
+ is-type level-1
+ metric-style wide
+ spf-interval 2 100 100
+ log-adjacency-changes all
+!
+router bgp 1001
+ no synchronization
+ bgp router-id 10.255.0.50
+ no bgp fast-external-fallover
+ bgp log-neighbor-changes
+ bgp deterministic-med
+ bgp update-delay 300
+ bgp maxas-limit 10
+ timers bgp 120 360
+ redistribute connected route-map connected-mbgp
+ redistribute static route-map static-mbgp
+ neighbor routereflector_client peer-group nlri unicast multicast
+ neighbor routereflector_client remote-as 1001
+ neighbor routereflector_client password 5 opsware
+ neighbor routereflector_client update-source Loopback0
+ neighbor routereflector_client version 4
+ neighbor routereflector_client next-hop-self
+ neighbor routereflector_client send-community
+ default-metric 1
+ distance mbgp 10 10 10
+ no auto-summary
+!
+ip route 0.0.0.0 0.0.0.0 10.255.38.1
+ip route 0.0.0.0 0.0.0.0 16.78.48.1
+!
+ip as-path access-list 1 deny _6451[2-9]_
+ip as-path access-list 1 deny _645[2-9][0-9]_
+ip as-path access-list 1 deny _64[6-9][0-9][0-9]_
+ip as-path access-list 1 deny _65[0-9][0-9][0-9]_
+ip as-path access-list 1 deny \(*\)
+ip as-path access-list 1 permit .*
+!
+ip http server
+ip http authentication local
+ip http secure-server
+ip http timeout-policy idle 600 life 86400 requests 10000
+ip tacacs source-interface Loopback0
+!
+ip access-list standard DisableAllHTTP
+ip access-list standard test123
+ip access-list standard test1234
+!
+ip access-list extended CRYPTO-ACL1
+ remark - encrypt pkts coming from the Trib LAN
+ permit ip 206.201.106.48 0.0.0.15 any
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ remark - encrypt pkts coming from the Trib LAN
+ip access-list extended TRIBCTL
+ remark 1 - Deny Attack Protocols
+ deny   53 any any
+ deny   55 any any
+ deny   77 any any
+ deny   pim any any
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ deny   ip any 10.0.0.0 0.255.255.255
+ deny   ip any 172.16.0.0 0.0.255.255
+ deny   ip any 192.168.0.0 0.0.255.255
+ remark 3 - Permit UDP for HSRP
+ permit udp host 206.201.106.50 any
+ permit udp host 206.201.106.51 any
+ remark 4 - Permit UDP from external switches
+ permit udp host 206.201.106.52 any
+ permit udp host 206.201.106.53 any
+ remark 6 - Permit UDP for DNS
+ permit udp 206.201.106.48 0.0.0.15 any eq domain
+ permit udp 206.201.106.48 0.0.0.15 eq domain any
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ permit udp 206.201.106.48 0.0.0.15 host 205.153.173.217 eq ntp
+ permit udp 206.201.106.48 0.0.0.15 host 206.201.104.9 eq ntp
+ permit udp 206.201.106.48 0.0.0.15 host 206.201.107.125 eq ntp
+ remark 8 - Deny all other UDP
+ deny   udp any any log
+ remark 9 - IP Control for this trib
+ permit ip 206.201.106.48 0.0.0.15 any
+ deny   ip any any log
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+ remark 1 - Deny Attack Protocols
+ remark 2 - Deny traffic to RFC1918 Private Addrs
+ remark 3 - Permit UDP for HSRP
+ remark 4 - Permit UDP from external switches
+ remark 6 - Permit UDP for DNS
+ remark 7 - Permit UDP for NTP (Blues only. NPEs don't use our NTP.)
+ remark 8 - Deny all other UDP
+ remark 9 - IP Control for this trib
+!
+!
+ip prefix-list 113 description Static-Connected-BGP prefix-filter (3)
+ip prefix-list 113 seq 5 permit 127.0.0.0/8 le 32
+ip prefix-list 113 seq 10 permit 10.0.0.0/8 le 32
+ip prefix-list 113 seq 15 permit 172.16.0.0/12 le 32
+ip prefix-list 113 seq 20 permit 192.168.0.0/16 le 32
+ip prefix-list 113 seq 25 permit 128.0.0.0/16 le 32
+ip prefix-list 113 seq 30 permit 191.255.0.0/16 le 32
+ip prefix-list 113 seq 35 permit 223.255.255.0/24 le 32
+!
+ip prefix-list 136 description more-specifics for transit-in (8)
+ip prefix-list 136 seq 10 permit 160.81.0.0/16 ge 25 le 26
+ip prefix-list 136 seq 20 permit 198.67.0.0/17 ge 25 le 26
+ip prefix-list 136 seq 30 permit 198.68.0.0/15 ge 25 le 26
+ip prefix-list 136 seq 40 permit 198.70.0.0/16 ge 25 le 26
+ip prefix-list 136 seq 50 permit 199.0.0.0/14 ge 25 le 26
+ip prefix-list 136 seq 60 permit 204.94.0.0/15 ge 25 le 26
+ip prefix-list 136 seq 70 permit 204.96.0.0/15 ge 25 le 26
+ip prefix-list 136 seq 80 permit 204.117.0.0/16 ge 25 le 26
+ip prefix-list 136 seq 90 permit 204.118.0.0/15 ge 25 le 26
+ip prefix-list 136 seq 100 permit 204.120.0.0/16 ge 25 le 26
+ip prefix-list 136 seq 110 permit 204.168.0.0/16 ge 25 le 26
+ip prefix-list 136 seq 120 permit 204.180.0.0/14 ge 25 le 26
+ip prefix-list 136 seq 130 permit 204.212.0.0/14 ge 25 le 26
+ip prefix-list 136 seq 140 permit 204.248.0.0/14 ge 25 le 26
+!
+ip prefix-list 1918 seq 5 permit 10.0.0.0/8 le 32
+ip prefix-list 1918 seq 10 permit 127.0.0.0/8 le 32
+ip prefix-list 1918 seq 15 permit 192.168.0.0/16 le 32
+ip prefix-list 1918 seq 20 permit 172.16.0.0/12 le 32
+ip prefix-list 1918 seq 25 permit 223.255.255.0/24 le 32
+ip prefix-list 1918 seq 30 permit 191.255.0.0/16 le 32
+ip prefix-list 1918 seq 35 deny 0.0.0.0/0
+logging source-interface Loopback10025
+logging 16.78.59.232
+logging 10.0.2.15
+logging 16.78.60.120
+logging 17.111.111.111
+logging 16.78.61.16
+logging 16.78.60.211
+logging 192.168.1.5
+access-list 20 deny   8.8.8.8
+access-list 20 permit 4.4.4.4
+access-list 20 deny   5.5.5.5
+access-list 20 permit any
+access-list 101 deny   icmp any any
+access-list 101 permit ip any any
+access-list 101 permit ip host 10.101.102.10 0.0.0.0 10.101.111.255
+access-list 150 permit udp any host 192.168.62.161 eq ntp
+snmp-server community group RO test1234
+snmp-server community RWSTR2 RW
+snmp-server community public RO
+snmp-server community private RW
+snmp-server community subadmin RO
+snmp-server trap-source Loopback10012
+snmp-server location SanFrancisco
+snmp-server host 10.10.10.10 notpublic 
+snmp-server context SNMPtest
+!
+!
+ipv6 router rip test
+!
+!
+route-map test permit 10
+!
+route-map test2 permit 10
+ description qos test data 
+ match policy-list SecurityPolicy
+!
+route-map policyMap permit 10
+ match ip address 100 102
+ set ip qos-group 1
+!
+!
+!
+tacacs-server host 10.255.132.87
+tacacs-server timeout 20
+tacacs-server key 7 121008161C0F05
+radius-server host 10.255.140.41 auth-port 1645 acct-port 1646 key 7 151B060D0A2E22
+radius-server timeout 20
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+!
+scheduler allocate 20000 1000
+!
+end
