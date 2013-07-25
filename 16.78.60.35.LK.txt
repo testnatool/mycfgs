@@ -31,7 +31,7 @@ aaa session-id unique
 resource policy
 !
 no ip source-route
-ip tcp window-size 32768
+ip tcp window-size 327245
 ip tcp synwait-time 5
 ip tcp path-mtu-discovery
 ip telnet source-interface Loopback0

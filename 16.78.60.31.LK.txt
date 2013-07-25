@@ -34,7 +34,7 @@ aaa authorization exec default local
 !
 aaa session-id common
 !
-clock calendar-valid
+clock calendar-invalid
 crypto pki token default removal timeout 0
 !
 !
